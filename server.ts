@@ -1,18 +1,37 @@
-const express = require('express');
-const cors = require('cors');
-const fs = require('fs');
-const path = require('path');
+import express, { Express, Request, Response } from 'express';
+import cors from 'cors';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-const app = express();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app: Express = express();
 const PORT = 3001;
 const TASKS_FILE = path.join(__dirname, 'tasks.json');
+
+interface Task {
+  id: string;
+  name: string;
+  description: string;
+  assignee: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+  stage?: string;
+}
+
+interface Tasks {
+  [key: string]: Task[];
+}
 
 app.use(cors());
 app.use(express.json());
 
 // Initialize tasks file if it doesn't exist
 if (!fs.existsSync(TASKS_FILE)) {
-  const initialTasks = {
+  const initialTasks: Tasks = {
     backlog: [],
     researching: [],
     coding: [],
@@ -23,28 +42,28 @@ if (!fs.existsSync(TASKS_FILE)) {
 }
 
 // Helper to read tasks
-const readTasks = () => {
+const readTasks = (): Tasks => {
   const data = fs.readFileSync(TASKS_FILE, 'utf-8');
   return JSON.parse(data);
 };
 
 // Helper to write tasks
-const writeTasks = (tasks) => {
+const writeTasks = (tasks: Tasks): void => {
   fs.writeFileSync(TASKS_FILE, JSON.stringify(tasks, null, 2));
 };
 
 // GET /tasks - Get all tasks
-app.get('/tasks', (req, res) => {
+app.get('/tasks', (_req: Request, res: Response) => {
   const tasks = readTasks();
   res.json(tasks);
 });
 
 // POST /tasks - Add a new task
-app.post('/tasks', (req, res) => {
+app.post('/tasks', (req: Request, res: Response) => {
   const { stage, name, description, assignee } = req.body;
   const tasks = readTasks();
   
-  const newTask = {
+  const newTask: Task = {
     id: Date.now().toString(),
     name,
     description: description || '',
@@ -64,7 +83,7 @@ app.post('/tasks', (req, res) => {
 });
 
 // PUT /tasks/:taskId - Update a task
-app.put('/tasks/:taskId', (req, res) => {
+app.put('/tasks/:taskId', (req: Request, res: Response) => {
   const { taskId } = req.params;
   const { stage, name, description, status, assignee } = req.body;
   const tasks = readTasks();
@@ -75,7 +94,7 @@ app.put('/tasks/:taskId', (req, res) => {
       // If moving to different stage
       if (stage && stage !== s) {
         tasks[s].splice(taskIndex, 1);
-        const newTask = {
+        const newTask: Task = {
           ...tasks[s][taskIndex],
           ...(name && { name }),
           ...(description && { description }),
@@ -106,7 +125,7 @@ app.put('/tasks/:taskId', (req, res) => {
 });
 
 // PUT /tasks/move/:taskId - Move task between stages
-app.put('/tasks/move/:taskId', (req, res) => {
+app.put('/tasks/move/:taskId', (req: Request, res: Response) => {
   const { taskId } = req.params;
   const { toStage } = req.body;
   const tasks = readTasks();
@@ -128,7 +147,7 @@ app.put('/tasks/move/:taskId', (req, res) => {
 });
 
 // DELETE /tasks/:taskId - Delete a task
-app.delete('/tasks/:taskId', (req, res) => {
+app.delete('/tasks/:taskId', (req: Request, res: Response) => {
   const { taskId } = req.params;
   const tasks = readTasks();
   

@@ -1,7 +1,28 @@
 {
-  "backlog": [],
+  "backlog": [
+    {
+      "id": "1773429424829",
+      "name": "Stage 1 - Firmware Generation",
+      "description": "ESP32 firmware with motor control, sensors, Wi-Fi, scheduling",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:17:04.829Z",
+      "updatedAt": "2026-03-13T19:17:04.829Z"
+    }
+  ],
   "researching": [],
   "coding": [],
   "testing": [],
-  "done": []
+  "done": [
+    {
+      "id": "1773429389648",
+      "name": "Stage 0 - Hardware Research",
+      "description": "Research smart pet feeder components",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:16:29.648Z",
+      "updatedAt": "2026-03-13T19:16:53.043Z",
+      "stage": "done"
+    }
+  ]
 }

@@ -1,83 +1,105 @@
 import { useState, useEffect } from 'react'
 
-const STAGES = ['backlog', 'researching', 'coding', 'testing', 'done']
+interface Task {
+  id: string;
+  name: string;
+  description: string;
+  assignee: string;
+  status: string;
+  createdAt: string;
+  updatedAt: string;
+}
 
-const STAGE_LABELS = {
+interface Tasks {
+  [key: string]: Task[];
+}
+
+const STAGES = ['backlog', 'researching', 'coding', 'testing', 'done'] as const;
+
+type Stage = typeof STAGES[number];
+
+const STAGE_LABELS: Record<Stage, string> = {
   backlog: 'Backlog',
   researching: 'Researching',
   coding: 'Coding',
   testing: 'QA / Testing',
   done: 'Done'
-}
+};
 
-const STAGE_COLORS = {
+const STAGE_COLORS: Record<Stage, string> = {
   backlog: 'from-gray-600 to-gray-700',
   researching: 'from-blue-600 to-blue-700',
   coding: 'from-purple-600 to-purple-700',
   testing: 'from-yellow-600 to-yellow-700',
   done: 'from-green-600 to-green-700'
-}
+};
 
 function App() {
-  const [tasks, setTasks] = useState({ backlog: [], researching: [], coding: [], testing: [], done: [] })
-  const [showAddModal, setShowAddModal] = useState(false)
-  const [selectedStage, setSelectedStage] = useState('backlog')
-  const [newTask, setNewTask] = useState({ name: '', description: '', assignee: 'Marco' })
+  const [tasks, setTasks] = useState<Tasks>({
+    backlog: [],
+    researching: [],
+    coding: [],
+    testing: [],
+    done: []
+  });
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [selectedStage, setSelectedStage] = useState<Stage>('backlog');
+  const [newTask, setNewTask] = useState({ name: '', description: '', assignee: 'Marco' });
 
   useEffect(() => {
-    fetchTasks()
-  }, [])
+    fetchTasks();
+  }, []);
 
   const fetchTasks = async () => {
     try {
-      const res = await fetch('http://localhost:3001/tasks')
-      const data = await res.json()
-      setTasks(data)
+      const res = await fetch('http://localhost:3001/tasks');
+      const data = await res.json();
+      setTasks(data);
     } catch (err) {
-      console.error('Failed to fetch tasks:', err)
+      console.error('Failed to fetch tasks:', err);
     }
-  }
+  };
 
   const addTask = async () => {
-    if (!newTask.name.trim()) return
+    if (!newTask.name.trim()) return;
     
     try {
       await fetch('http://localhost:3001/tasks', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...newTask, stage: selectedStage })
-      })
-      setNewTask({ name: '', description: '', assignee: 'Marco' })
-      setShowAddModal(false)
-      fetchTasks()
+      });
+      setNewTask({ name: '', description: '', assignee: 'Marco' });
+      setShowAddModal(false);
+      fetchTasks();
     } catch (err) {
-      console.error('Failed to add task:', err)
+      console.error('Failed to add task:', err);
     }
-  }
+  };
 
-  const moveTask = async (taskId, toStage) => {
+  const moveTask = async (taskId: string, toStage: Stage) => {
     try {
       await fetch(`http://localhost:3001/tasks/move/${taskId}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ toStage })
-      })
-      fetchTasks()
+      });
+      fetchTasks();
     } catch (err) {
-      console.error('Failed to move task:', err)
+      console.error('Failed to move task:', err);
     }
-  }
+  };
 
-  const deleteTask = async (taskId) => {
+  const deleteTask = async (taskId: string) => {
     try {
       await fetch(`http://localhost:3001/tasks/${taskId}`, {
         method: 'DELETE'
-      })
-      fetchTasks()
+      });
+      fetchTasks();
     } catch (err) {
-      console.error('Failed to delete task:', err)
+      console.error('Failed to delete task:', err);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen p-8">
@@ -92,7 +114,7 @@ function App() {
       </div>
 
       <div className="grid grid-cols-5 gap-4">
-        {STAGES.map(stage => (
+        {(STAGES as Stage[]).map((stage) => (
           <div key={stage} className="bg-gray-800/50 rounded-xl p-4 min-h-[500px]">
             <div className={`bg-gradient-to-r ${STAGE_COLORS[stage]} rounded-lg px-4 py-2 mb-4`}>
               <h2 className="font-semibold text-white text-center">{STAGE_LABELS[stage]}</h2>
@@ -100,7 +122,7 @@ function App() {
             </div>
             
             <div className="space-y-3">
-              {tasks[stage]?.map(task => (
+              {tasks[stage]?.map((task) => (
                 <div key={task.id} className="bg-gray-700 rounded-lg p-3 cursor-pointer hover:bg-gray-600 transition-colors group">
                   <div className="flex justify-between items-start mb-2">
                     <span className="font-medium text-white text-sm">{task.name}</span>
@@ -125,10 +147,10 @@ function App() {
                     <div className="mt-2 pt-2 border-t border-gray-600">
                       <select
                         value={stage}
-                        onChange={(e) => moveTask(task.id, e.target.value)}
+                        onChange={(e) => moveTask(task.id, e.target.value as Stage)}
                         className="w-full bg-gray-800 text-xs text-gray-300 rounded px-2 py-1"
                       >
-                        {STAGES.map(s => (
+                        {(STAGES as Stage[]).map((s) => (
                           <option key={s} value={s} disabled={s === stage}>
                             Move to: {STAGE_LABELS[s]}
                           </option>
@@ -187,10 +209,10 @@ function App() {
                 <label className="block text-gray-400 text-sm mb-1">Stage</label>
                 <select
                   value={selectedStage}
-                  onChange={(e) => setSelectedStage(e.target.value)}
+                  onChange={(e) => setSelectedStage(e.target.value as Stage)}
                   className="w-full bg-gray-700 text-white rounded-lg px-3 py-2"
                 >
-                  {STAGES.map(s => (
+                  {(STAGES as Stage[]).map((s) => (
                     <option key={s} value={s}>{STAGE_LABELS[s]}</option>
                   ))}
                 </select>
@@ -215,7 +237,7 @@ function App() {
         </div>
       )}
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
