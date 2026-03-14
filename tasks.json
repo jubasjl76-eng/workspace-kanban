@@ -1,19 +1,10 @@
 {
-  "backlog": [
-    {
-      "id": "1773429424829",
-      "name": "Stage 1 - Firmware Generation",
-      "description": "ESP32 firmware with motor control, sensors, Wi-Fi, scheduling",
-      "assignee": "Jubas",
-      "status": "pending",
-      "createdAt": "2026-03-13T19:17:04.829Z",
-      "updatedAt": "2026-03-13T19:17:04.829Z"
-    }
-  ],
-  "researching": [],
+  "backlog": [],
+  "todo": [],
+  "in_progress": [],
   "coding": [],
   "testing": [],
-  "done": [
+  "review": [
     {
       "id": "1773429389648",
       "name": "Stage 0 - Hardware Research",
@@ -21,8 +12,100 @@
       "assignee": "Jubas",
       "status": "pending",
       "createdAt": "2026-03-13T19:16:29.648Z",
-      "updatedAt": "2026-03-13T19:16:53.043Z",
-      "stage": "done"
+      "updatedAt": "2026-03-13T19:16:53.043Z"
+    },
+    {
+      "id": "1773429998012",
+      "name": "Stage 1 - Firmware Generation",
+      "description": "ESP32 firmware with motor control, sensors, Wi-Fi, scheduling",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:26:38.012Z",
+      "updatedAt": "2026-03-13T19:26:42.704Z"
+    },
+    {
+      "id": "1773430005204",
+      "name": "Stage 2 - Backend API",
+      "description": "Node.js/Express API with TypeScript",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:26:45.204Z",
+      "updatedAt": "2026-03-13T19:26:45.204Z"
+    },
+    {
+      "id": "1773430007930",
+      "name": "Stage 4 - 3D Design",
+      "description": "OpenSCAD enclosure with motor mount, sensor mount, bowl housing",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:26:47.930Z",
+      "updatedAt": "2026-03-13T19:26:47.930Z"
+    },
+    {
+      "id": "1773430011536",
+      "name": "Stage 6 - Documentation",
+      "description": "Complete docs: component list, assembly, firmware installation, API setup",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:26:51.536Z",
+      "updatedAt": "2026-03-13T19:26:51.536Z"
+    },
+    {
+      "id": "1773430011556",
+      "name": "Stage 3 - QA Testing",
+      "description": "Unit tests for firmware and API",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-13T19:26:51.556Z",
+      "updatedAt": "2026-03-13T19:26:51.556Z"
+    },
+    {
+      "id": "1773479779574",
+      "name": "GitOps Setup",
+      "description": "Set up GitHub Actions + Terraform CI/CD",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-14T09:16:19.574Z",
+      "updatedAt": "2026-03-14T09:16:27.585Z"
+    },
+    {
+      "id": "1773479783869",
+      "name": "Unified Backend",
+      "description": "Create unified backend API connecting all services",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-14T09:16:23.869Z",
+      "updatedAt": "2026-03-14T09:16:23.869Z"
+    },
+    {
+      "id": "1773479783882",
+      "name": "Terraform Repo",
+      "description": "Create centralized Terraform infrastructure repo",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-14T09:16:23.882Z",
+      "updatedAt": "2026-03-14T09:16:23.882Z"
+    },
+    {
+      "id": "1773480064614",
+      "name": "Add Terraform to Backoffice Dashboard",
+      "description": "Create Terraform infrastructure for deploying the dashboard",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-14T09:21:04.614Z",
+      "updatedAt": "2026-03-14T09:21:59.875Z",
+      "stage": "review"
+    },
+    {
+      "id": "1773480068433",
+      "name": "Investigate React Native Auto-Deploy",
+      "description": "Check if we can auto-deploy the app without Expo (using EAS or bare workflow)",
+      "assignee": "Jubas",
+      "status": "pending",
+      "createdAt": "2026-03-14T09:21:08.433Z",
+      "updatedAt": "2026-03-14T09:22:03.155Z",
+      "stage": "review"
     }
-  ]
+  ],
+  "done": []
 }

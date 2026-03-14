@@ -14,23 +14,27 @@ interface Tasks {
   [key: string]: Task[];
 }
 
-const STAGES = ['backlog', 'researching', 'coding', 'testing', 'done'] as const;
+const STAGES = ['backlog', 'todo', 'in_progress', 'coding', 'testing', 'review', 'done'] as const;
 
 type Stage = typeof STAGES[number];
 
 const STAGE_LABELS: Record<Stage, string> = {
   backlog: 'Backlog',
-  researching: 'Researching',
+  todo: 'To Do',
+  in_progress: 'In Progress',
   coding: 'Coding',
   testing: 'QA / Testing',
-  done: 'Done'
+  review: '🔍 Review',
+  done: '✅ Done'
 };
 
 const STAGE_COLORS: Record<Stage, string> = {
   backlog: 'from-gray-600 to-gray-700',
-  researching: 'from-blue-600 to-blue-700',
+  todo: 'from-blue-600 to-blue-700',
+  in_progress: 'from-cyan-600 to-cyan-700',
   coding: 'from-purple-600 to-purple-700',
   testing: 'from-yellow-600 to-yellow-700',
+  review: 'from-orange-600 to-orange-700',
   done: 'from-green-600 to-green-700'
 };
 
